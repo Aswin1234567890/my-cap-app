@@ -1,0 +1,10 @@
+COLUMN TABLE my_saree_Saree (
+  ID NVARCHAR(36) NOT NULL,
+  Name NVARCHAR(5000),
+  Price INTEGER,
+  Description NVARCHAR(5000),
+  Stock INTEGER,
+  Status NVARCHAR(5000),
+  Url NVARCHAR(5000),
+  PRIMARY KEY(ID)
+)

@@ -1,0 +1,9 @@
+VIEW CatalogService_Sarees AS SELECT
+  Saree_0.ID,
+  Saree_0.Name,
+  Saree_0.Price,
+  Saree_0.Description,
+  Saree_0.Stock,
+  Saree_0.Status,
+  Saree_0.Url
+FROM my_saree_Saree AS Saree_0

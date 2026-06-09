@@ -1,0 +1,66 @@
+{
+  "name": "workingout",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch-project1": "cds watch --open project1/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "undeploy": "cf undeploy workingout --delete-services --delete-service-keys --delete-service-brokers",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+    "watch-project2": "cds watch --open project2/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-project3": "cds watch --open project3/index.html?sap-ui-xx-viewCache=false --livereload false"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@cap-js/hana": "^2",
+    "@cap-js/sqlite": "^2.4.0",
+    "@sap/cds": "^9.9.1",
+    "@sap/xssec": "^4.13.0",
+    "express": "^5.2.1",
+    "passport": "^0.7.0"
+  },
+  "devDependencies": {
+    "@sap/cds-dk": "^9.9.0",
+    "mbt": "^1.2.29",
+    "rimraf": "^5.0.5"
+  },
+  "cds": {
+    "requires": {
+      "[development]": {
+        "db": {
+          "kind": "sqlite",
+          "credentials": {
+            "database": ":memory:"
+          }
+        }
+      },
+      "[production]": {
+        "db": {
+          "kind": "hana"
+        },
+        "auth": "xsuaa"
+      },
+      "[hybrid]": {
+        "db": {
+          "kind": "hana"
+        }
+      }
+    },
+    "features": {
+      "in_memory_db": false
+    }
+  },
+  "sapux": [
+    "app/project2",
+    "app/project2",
+    "app/project2"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}

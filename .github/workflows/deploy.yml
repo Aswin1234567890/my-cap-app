@@ -7,7 +7,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -19,9 +18,11 @@ jobs:
       - name: Install MBT + CF CLI
         run: |
           npm install -g mbt
-          curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github" -o cf.tgz
-          tar -xvzf cf.tgz
-          sudo mv cf /usr/local/bin
+          curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github" -o cf-cli.tgz
+          mkdir cf-cli
+          tar -xvzf cf-cli.tgz -C cf-cli
+          sudo mv cf-cli/cf8 /usr/local/bin/cf || sudo mv cf-cli/cf /usr/local/bin/cf
+          cf version
 
       - name: Build MTA
         run: mbt build

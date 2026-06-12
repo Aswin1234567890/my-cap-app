@@ -35,5 +35,9 @@ jobs:
                    -o ${{ secrets.CF_ORG }} \
                    -s ${{ secrets.CF_SPACE }}
 
+      - name: Install MultiApps Plugin
+        run: |
+          cf install-plugin -r CF-Community "multiapps plugin" -f
+
       - name: Deploy MTA
         run: cf deploy mta_archives/*.mtar

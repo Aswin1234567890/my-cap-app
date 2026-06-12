@@ -1,0 +1,32 @@
+{
+  "xsappname": "my-cap-app",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.Admin",
+      "description": "Admin Access"
+    },
+    {
+      "name": "$XSAPPNAME.User",
+      "description": "User Access"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "Admin",
+      "description": "Administrator",
+      "scope-references": [
+        "$XSAPPNAME.Admin",
+        "$XSAPPNAME.User"
+      ]
+    },
+    {
+      "name": "User",
+      "description": "Normal User",
+      "scope-references": [
+        "$XSAPPNAME.User"
+      ]
+    }
+  ],
+  "attributes": []
+}

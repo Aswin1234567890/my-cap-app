@@ -18,11 +18,11 @@ jobs:
       - name: Install MBT + CF CLI
         run: |
           npm install -g mbt
-          curl -L "https://packages.cloudfoundry.org/debian/cloudfoundry-cli.asc" | sudo apt-key add -
-          echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
-          sudo apt-get update
-          sudo apt-get install -y cf8-cli
-          cf version
+          curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github" -o cf-cli.tgz
+          sudo mkdir -p /usr/local/cf-cli
+          sudo tar -xzf cf-cli.tgz -C /usr/local/cf-cli
+          echo "/usr/local/cf-cli" >> $GITHUB_PATH
+          /usr/local/cf-cli/cf version
 
       - name: Build MTA
         run: mbt build

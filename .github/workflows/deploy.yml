@@ -1,0 +1,38 @@
+name: Deploy MTA to CF
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install MBT + CF CLI
+        run: |
+          npm install -g mbt
+          curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github" -o cf.tgz
+          tar -xvzf cf.tgz
+          sudo mv cf /usr/local/bin
+
+      - name: Build MTA
+        run: mbt build
+
+      - name: CF Login
+        run: |
+          cf login -a ${{ secrets.CF_API }} \
+                   -u ${{ secrets.CF_USERNAME }} \
+                   -p ${{ secrets.CF_PASSWORD }} \
+                   -o ${{ secrets.CF_ORG }} \
+                   -s ${{ secrets.CF_SPACE }}
+
+      - name: Deploy MTA
+        run: cf deploy mta_archives/*.mtar
